@@ -13,6 +13,14 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <title>Loan Calculator</title>
+    <style>
+        #loading {
+            display:none;
+        }
+        #results {
+            display: none;
+        }
+    </style>
   </head>
   <body class="bg-dark">
       <div class="container">
@@ -62,7 +70,7 @@
 
 
                     <!--Results-->
-<div class="results" class="pt-4">
+<div id="results" class="pt-4">
     <h5>Results</h5>
                     <div class="form-group">
                         <div class="input-group">
