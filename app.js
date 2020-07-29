@@ -139,3 +139,43 @@ link.innerHTML = '< i class= "fa fa-remove"></i>';
 document.querySelector('h1').appendChild(li);
 
 console.log(li);
+
+document.querySelector('.btn-primary').addEventListener('click',function(e){
+    console.log("Hi There");
+    e.preventDefault(); // we can prevent the default behaviour by restricting it
+}); 
+
+
+document.querySelector('.btn-primary').addEventListener('click',onClick);
+
+function onClick(e)
+{
+    console.log(e);
+    e.target.innerText = 'Clicked!'
+}
+
+
+document.querySelector('.input-primary').addEventListener('keypress',runevent);
+
+function runevent(e)
+{
+    console.log(e.target.value);
+}
+
+
+document.querySelector('select').addEventListener('change',runevent2);
+
+function runevent2(e){ console.log(e.target.value);
+}
+
+
+//local storage needs to be cleared manually
+
+
+localStorage.setItem('name','Rohit');
+
+//either use localStorage.clear() or localStorage.removeItem(keyname)
+
+sessionStorage.setItem('name','Shreyasee');
+
+
