@@ -2,7 +2,7 @@ let express = require('express');
 let mongodb = require('mongodb');
 let app = express();
 let db;
-let connstring = 'mongodb+srv://todoadmin:test@cluster0.zvop7.mongodb.net/ToDoApp?retryWrites=true&w=majority';
+let connstring = 'mongodb://todoadmin:test@cluster0-shard-00-00.zvop7.mongodb.net:27017,cluster0-shard-00-01.zvop7.mongodb.net:27017,cluster0-shard-00-02.zvop7.mongodb.net:27017/ToDoApps?ssl=true&replicaSet=atlas-y6sw7f-shard-0&authSource=admin&retryWrites=true&w=majority';
 mongodb.connect(connstring,{useNewUrlParser:true, useUnifiedTopology: true},function(err,client){
 db = client.db();
 app.listen(3000);
