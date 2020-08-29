@@ -1,3 +1,5 @@
+const usersCollection = require('../db').collection("users") 
+
 const validator = require("validator")
 
 let User = function(data) {
@@ -38,6 +40,25 @@ User.prototype.validate = function() {
   if (this.data.username.length > 30) {this.errors.push("Username cannot exceed 30 characters.")}
 }
 
+User.prototype.login = function(callback){
+  this.cleanUp()
+  usersCollection.findOne({username: this.data.username}, (err, attemptedUser) => {
+
+    if(attemptedUser && attemptedUser.password == this.data.password)
+    {
+      callback("Congrats!")
+    }
+    else{
+
+      callback("Invalid UserName / Password")
+
+    }
+
+  })
+
+}
+
+
 User.prototype.register = function() {
   // Step #1: Validate user data
   this.cleanUp()
@@ -45,6 +66,12 @@ User.prototype.register = function() {
 
   // Step #2: Only if there are no validation errors 
   // then save the user data into a database
+
+  if(!this.errors.length)
+  {
+    usersCollection.insertOne(this.data)
+  }
 }
+
 
 module.exports = User
