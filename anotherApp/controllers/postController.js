@@ -30,3 +30,29 @@ exports.viewEditScreen = async function(req, res) {
     res.render("404")
   }
 }
+
+exports.edit = function(req, res) {
+  let post = new Post(req.body, req.visitorId, req.params.id)
+  post.update().then((status) => {
+    if(status == "success"){
+      req.flash("success","Post updated successfully!")
+      req.session.save(function(){
+        res.redirect(`/post/${req.params.id}/edit`)
+      })
+    }
+    else{
+      post.errors.forEach(function(error){
+        req.flash("errors", error)
+      })
+      req.session.save(function(){
+        res.redirect(`/post/${req.params.id}/edit`)
+      })
+    }
+  }).catch(() => {
+    req.flash("Errors","No permission to perform action!")
+    req.session.save(function(){
+      res.redirect("/")
+    })
+  })
+
+}
