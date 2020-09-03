@@ -1,22 +1,17 @@
 const User = require('../models/User')
 const Post = require('../models/Post')
 
-exports.mustBeLoggedIn = function(req,res,next)
-{
-  if(req.session.user){
-
+exports.mustBeLoggedIn = function(req, res, next) {
+  if (req.session.user) {
     next()
-
-  }
-  else{
-
-    req.flash("errors","You must be logged in to perform the activity")
-    req.session.save(function(){
+  } else {
+    req.flash("errors", "You must be logged in to perform that action.")
+    req.session.save(function() {
       res.redirect('/')
     })
-
   }
 }
+
 exports.login = function(req, res) {
   let user = new User(req.body)
   user.login().then(function(result) {
@@ -63,27 +58,25 @@ exports.home = function(req, res) {
   }
 }
 
-
-exports.ifUserExists = function(req,res,next){
-  User.findByUsername(req.params.username).then(function(userDocument){
+exports.ifUserExists = function(req, res, next) {
+  User.findByUsername(req.params.username).then(function(userDocument) {
     req.profileUser = userDocument
     next()
-  }).catch(function(){
-    res.render('404')
+  }).catch(function() {
+    res.render("404")
   })
 }
 
-exports.profilePostsScreen = function(req,res){
-  Post.findByAuthorId(req.profileUser._id).then(function(posts){
-
-    res.render('profile',{
+exports.profilePostsScreen = function(req, res) {
+  // ask our post model for posts by a certain author id
+  Post.findByAuthorId(req.profileUser._id).then(function(posts) {
+    res.render('profile', {
       posts: posts,
       profileUsername: req.profileUser.username,
-      avatar: req.profileUser.avatar
+      profileAvatar: req.profileUser.avatar
     })
-
-  }).catch(function(){
+  }).catch(function() {
     res.render("404")
   })
-  
+
 }
